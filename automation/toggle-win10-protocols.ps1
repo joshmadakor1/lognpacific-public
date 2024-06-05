@@ -1,7 +1,6 @@
  # Variable to determine if we want to make the computer secure or insecure
 $makeSecure = $true
 
-
 # Check if the script is run as Administrator
 function Check-Admin {
     $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
