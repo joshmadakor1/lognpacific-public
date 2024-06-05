@@ -1,5 +1,5 @@
  # Variable to determine if we want to make the computer secure or insecure
-$makeSecure = $false #$true
+$makeSecure = $true
 
 
 # Check if the script is run as Administrator
