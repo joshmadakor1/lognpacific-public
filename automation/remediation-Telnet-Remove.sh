@@ -19,7 +19,7 @@ sudo apt autoremove -y
 sudo apt update
 
 # Make the script executable:
-# chmod +x remove_telnetd.sh
+# chmod +x remediation-Telnet-Remove.sh
 
 # Execute the script:
 # ./remediation-Telnet-Remove.sh
