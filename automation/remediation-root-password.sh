@@ -5,6 +5,9 @@ echo -e "Cyberlab123!\nCyberlab123!" | sudo passwd root
 # There are better ways to go about this, but this is just a proof of concept to remediate this particular vulnerability.
 rm remediation-root-password.sh
 
+# Download the script
+# wget <github url of raw script>
+
 # Make the script executable:
 # chmod +x remediation-root-password.sh
 
