@@ -29,3 +29,12 @@ echo "Installation confirmed with the following version:"
 # Reboot to apply all changes
 echo "Rebooting system to apply changes..."
 sudo reboot
+
+# Download the script
+# wget <github url of raw script>
+
+# Make the script executable:
+# chmod +x remediation-openssl-3.0.5-install.sh
+
+# Execute the script:
+# ./remediation-openssl-3.0.5-install.sh
