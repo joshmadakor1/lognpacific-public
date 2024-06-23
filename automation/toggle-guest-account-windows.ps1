@@ -1,35 +1,41 @@
-# PowerShell Script to Toggle the "Guest" Account on Windows Server 2019
-$enableGuestAccount = $true  # Set to $true to enable, $false to disable
+ # PowerShell Script to Toggle the "Guest" Account on Windows Server 2019
 
-# Step 1: Define the username for the Guest account and desired state
+# Step 1: Define the desired action for the Guest account
+# Set this variable to $true to enable the Guest account or $false to disable it
+$enableGuestAccount = $true  # Change to $false to disable the account
+
+# Step 2: Define the username for the Guest account
 $guestAccount = "Guest"
 
-# Step 2: Get the Guest account object
-# Using Get-LocalUser cmdlet to retrieve the account information
-$guestUser = Get-LocalUser -Name $guestAccount
+# Step 3: Check the current status of the Guest account
+# Using net user command to check if the Guest account is enabled or disabled
+$guestStatus = net user $guestAccount
 
-# Check if the Guest account exists
-if ($guestUser) {
-    # Step 3: Toggle the Guest account based on the desired state
-    if ($guestUser.Enabled -ne $enableGuestAccount) {
-        Set-LocalUser -Name $guestAccount -Enabled $enableGuestAccount
-
-        # Step 4: Provide feedback to the user based on the action taken
-        if ($enableGuestAccount) {
+# Function to enable or disable the Guest account based on the desired action
+function Toggle-GuestAccount {
+    param (
+        [string]$accountName,
+        [bool]$enableAccount
+    )
+    
+    if ($enableAccount) {
+        # Enable the Guest account if it is currently disabled
+        if ($guestStatus -like "*Account active*No*") {
+            net user $accountName /active:yes
             Write-Host "The Guest account has been successfully enabled."
         } else {
-            Write-Host "The Guest account has been successfully disabled."
+            Write-Host "The Guest account is already enabled."
         }
     } else {
-        # If the account is already in the desired state, provide appropriate feedback
-        if ($enableGuestAccount) {
-            Write-Host "The Guest account is already enabled."
+        # Disable the Guest account if it is currently enabled
+        if ($guestStatus -like "*Account active*Yes*") {
+            net user $accountName /active:no
+            Write-Host "The Guest account has been successfully disabled."
         } else {
             Write-Host "The Guest account is already disabled."
         }
     }
-} else {
-    Write-Host "The Guest account does not exist on this system."
 }
 
-# End of Script
+# Step 4: Call the function to toggle the Guest account status
+Toggle-GuestAccount -accountName $guestAccount -enableAccount $enableGuestAccount
