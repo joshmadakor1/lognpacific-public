@@ -19,7 +19,7 @@ sudo apt autoremove -y
 sudo apt update
 
 # Download the script
-# wget <github url of raw script>
+# wget https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/main/automation/remediation-Telnet-Remove.sh --no-check-certificate
 
 # Make the script executable:
 # chmod +x remediation-Telnet-Remove.sh
