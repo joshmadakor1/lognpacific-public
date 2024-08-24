@@ -6,7 +6,7 @@ echo -e "Cyberlab123!\nCyberlab123!" | sudo passwd root
 rm remediation-root-password.sh
 
 # Download the script
-# wget https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/main/automation/remediation-root-password.sh
+# wget https://raw.githubusercontent.com/joshmadakor1/lognpacific-public/main/automation/remediation-root-password.sh --no-check-certificate
 
 # Make the script executable:
 # chmod +x remediation-root-password.sh
