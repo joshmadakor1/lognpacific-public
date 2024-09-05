@@ -40,19 +40,19 @@ DeviceInfo
 ---
 
 ## Supplemental:
-- **More on "Shared Services" in the context of PCI DSS**: https://www.pcisecuritystandards.org%2Fdocuments%2FGuidance-PCI-DSS-Scoping-and-Segmentation_v1.pdf
+- **More on "Shared Services" in the context of PCI DSS**: [PCI DSS Scoping and Segmentation](https://www.pcisecuritystandards.org%2Fdocuments%2FGuidance-PCI-DSS-Scoping-and-Segmentation_v1.pdf)
 
 ---
 
 ## Created By:
-- **Author Name**: `Sijia Li`
+- **Author Name**: Sijia Li
 - **Author Contact**: https://www.linkedin.com/in/sijiasevon/
-- **Date**: `August 31, 2024`
+- **Date**: August 31, 2024
 
 ## Validated By:
-- **Reviewer Name**: `Josh Madakor`
+- **Reviewer Name**: Josh Madakor
 - **Reviewer Contact**: https://www.linkedin.com/in/joshmadakor/
-- **Validation Date**: `September 6, 2024`
+- **Validation Date**: September 6, 2024
 
 ---
 
@@ -64,4 +64,4 @@ DeviceInfo
 ## Revision History:
 | **Version** | **Changes**                   | **Date**         | **Modified By**   |
 |-------------|-------------------------------|------------------|-------------------|
-| 1.0         | Initial draft                  | `September  6, 2024`  | `Josh Madakor`   
+| 1.0         | Initial draft                  | `September  6, 2024`  | `Sijia Li`   
