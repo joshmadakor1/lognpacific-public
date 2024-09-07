@@ -1,4 +1,4 @@
-# Use Case: 
+# Use Case
 **Detection of Internet-facing sensitive assets**
 
 ## Example Scenario:
