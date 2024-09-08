@@ -19,7 +19,7 @@
 .USAGE
     Set [$makeSecure = $true] to secure the system
     Example syntax:
-    PS C:\> .\remediation-wireshark-uninstall.ps1 
+    PS C:\> .\toggle-protocols.ps1 
  #>
  
 # Variable to determine if we want to make the computer secure or insecure
