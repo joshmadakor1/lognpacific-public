@@ -1,3 +1,27 @@
+<#
+.SYNOPSIS
+    Toggles guest account Administrators group membership (add vs remove) on the system.
+    Please test thoroughly in a non-production environment before deploying widely.
+    Make sure to run as Administrator or with appropriate privileges.
+
+.NOTES
+    Author        : Josh Madakor
+    Date Created  : 2024-09-09
+    Last Modified : 2024-09-09
+    Version       : 1.0
+
+.TESTED ON
+    Date(s) Tested  : 2024-09-09
+    Tested By       : Josh Madakor
+    Systems Tested  : Windows Server 2019 Datacenter, Build 1809
+    PowerShell Ver. : 5.1.17763.6189
+
+.USAGE
+    Set [$AddGuestToAdminGroup = $False] to secure the system
+    Example syntax:
+    PS C:\> .\toggle-guest-local-administrators.ps1 
+ #>
+ 
  # Define the variable to control the action: $True to add the guest account, $False to remove it
 $AddGuestToAdminGroup = $False
 
