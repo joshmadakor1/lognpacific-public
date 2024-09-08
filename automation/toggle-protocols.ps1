@@ -1,4 +1,28 @@
- # Variable to determine if we want to make the computer secure or insecure
+<#
+.SYNOPSIS
+    Toggles cryptographic protocols (secure vs insecure) on the system.
+    Please test thoroughly in a non-production environment before deploying widely.
+    Make sure to run as Administrator or with appropriate privileges.
+
+.NOTES
+    Author        : Your Name
+    Date Created  : 2024-09-09
+    Last Modified : 2024-09-09
+    Version       : 1.0
+
+.TESTED ON
+    Date(s) Tested  : 2024-09-09
+    Tested By       : Josh Madakor
+    Systems Tested  : Windows Server 2019 Datacenter, Build 1809
+    PowerShell Ver. : 5.1.17763.6189
+
+.USAGE
+    Set [$makeSecure = $true] to secure the system
+    Example syntax:
+    PS C:\> .\remediation-wireshark-uninstall.ps1 
+ #>
+ 
+# Variable to determine if we want to make the computer secure or insecure
 $makeSecure = $true
 
 # Check if the script is run as Administrator
