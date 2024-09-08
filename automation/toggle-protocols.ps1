@@ -10,7 +10,7 @@
     Last Modified : 2024-09-09
     Version       : 1.0
 
-.TESTED ON
+.TESTED
     Date(s) Tested  : 2024-09-09
     Tested By       : Josh Madakor
     Systems Tested  : Windows Server 2019 Datacenter, Build 1809
