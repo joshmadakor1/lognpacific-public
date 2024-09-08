@@ -10,7 +10,7 @@
     Last Modified : 2024-09-09
     Version       : 1.0
 
-.TESTED
+.TESTED ON
     Date(s) Tested  : 2024-09-09
     Tested By       : Josh Madakor
     Systems Tested  : Windows Server 2019 Datacenter, Build 1809
@@ -20,7 +20,7 @@
     Set [$makeSecure = $true] to secure the system
     Example syntax:
     PS C:\> .\toggle-protocols.ps1 
- #>
+#>
  
 # Variable to determine if we want to make the computer secure or insecure
 $makeSecure = $true
