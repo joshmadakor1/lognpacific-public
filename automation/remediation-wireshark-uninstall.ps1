@@ -6,7 +6,7 @@
     Make sure to run as Administrator or with appropriate privileges.
 
 .NOTES
-    Author        : Your Name
+    Author        : Josh Madakor
     Date Created  : 2024-09-09
     Last Modified : 2024-09-09
     Version       : 1.0
@@ -21,7 +21,7 @@
 .USAGE
     Example syntax:
     PS C:\> .\remediation-wireshark-uninstall.ps1 
- #>
+#>
  
  # Define the variables
 $wiresharkDisplayName = "Wireshark 2.2.1 (64-bit)"
