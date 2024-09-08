@@ -1,7 +1,30 @@
- # PowerShell script to toggle between secure and insecure cipher suite configurations and enable SSL Cipher Suite Order in Group Policy
+<#
+.SYNOPSIS
+    Toggles ciphersuites (secure vs insecure) on the system.
+    Please test thoroughly in a non-production environment before deploying widely.
+    Make sure to run as Administrator or with appropriate privileges.
+
+.NOTES
+    Author        : Your Name
+    Date Created  : 2024-09-09
+    Last Modified : 2024-09-09
+    Version       : 1.0
+
+.TESTED ON
+    Date(s) Tested  : 2024-09-09
+    Tested By       : Josh Madakor
+    Systems Tested  : Windows Server 2019 Datacenter, Build 1809
+    PowerShell Ver. : 5.1.17763.6189
+
+.USAGE
+    Set [$secureEnvironment = $true] to secure the system
+    Example syntax:
+    PS C:\> .\toggle-cipher-suites.ps1 
+#>
+
 
 # Set this variable to $true for a secure environment, $false for an insecure environment
-$secureEnvironment = $false
+$secureEnvironment = $true
 
 # Define the secure cipher suite list as a comma-separated string
 $secureCipherSuites = "TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_NULL_SHA256,TLS_RSA_WITH_NULL_SHA,TLS_PSK_WITH_AES_256_GCM_SHA384,TLS_PSK_WITH_AES_128_GCM_SHA256,TLS_PSK_WITH_AES_256_CBC_SHA384,TLS_PSK_WITH_AES_128_CBC_SHA256,TLS_PSK_WITH_NULL_SHA384,TLS_PSK_WITH_NULL_SHA256"
