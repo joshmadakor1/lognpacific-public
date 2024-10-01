@@ -1,0 +1,31 @@
+{
+  "type": 3,
+  "content": {
+    "version": "KqlItem/1.0",
+    "query": "// Only works for IPv4 Addresses\nlet GeoIPDB_FULL = _GetWatchlist(\"geoip\");\nlet AzureActivityRecords = AzureActivity\n| where not(Caller matches regex @\"^[{(]?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}[)}]?$\")\n| where CallerIpAddress matches regex @\"\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b\"\n| where OperationNameValue endswith \"WRITE\" and (ActivityStatusValue == \"Success\" or ActivityStatusValue == \"Succeeded\")\n| summarize ResouceCreationCount = count() by Caller, CallerIpAddress;\nAzureActivityRecords\n| evaluate ipv4_lookup(GeoIPDB_FULL, CallerIpAddress, network)\n| project Caller, \n          CallerPrefix = split(Caller, \"@\")[0],  // Splits Caller UPN and takes the part before @\n          CallerIpAddress, \n          ResouceCreationCount, \n          Country = countryname, \n          Latitude = latitude, \n          Longitude = longitude, \n          friendly_label = strcat(split(Caller, \"@\")[0], \" - \", cityname, \", \", countryname)\n",
+    "size": 3,
+    "timeContext": {
+      "durationMs": 2592000000
+    },
+    "queryType": 0,
+    "resourceType": "microsoft.operationalinsights/workspaces",
+    "visualization": "map",
+    "mapSettings": {
+      "locInfo": "LatLong",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "sizeSettings": "ResouceCreationCount",
+      "sizeAggregation": "Sum",
+      "labelSettings": "friendly_label",
+      "legendMetric": "ResouceCreationCount",
+      "legendAggregation": "Sum",
+      "itemColorSettings": {
+        "nodeColorField": "ResouceCreationCount",
+        "colorAggregation": "Sum",
+        "type": "heatmap",
+        "heatmapPalette": "greenRed"
+      }
+    }
+  },
+  "name": "query - 2"
+}
