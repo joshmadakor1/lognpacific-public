@@ -1,0 +1,33 @@
+{
+  "type": 3,
+  "content": {
+    "version": "KqlItem/1.0",
+    "query": "let GeoIPDB_FULL = _GetWatchlist(\"geoip\");\nDeviceLogonEvents\n| where ActionType == \"LogonFailed\"\n| order by TimeGenerated desc\n| evaluate ipv4_lookup(GeoIPDB_FULL, RemoteIP, network)\n| summarize LoginAttempts = count() by RemoteIP, City = cityname, Country = countryname, friendly_location = strcat(cityname, \" (\", countryname, \")\"), Latitude = latitude, Longitude = longitude;",
+    "size": 3,
+    "timeContext": {
+      "durationMs": 2592000000
+    },
+    "queryType": 0,
+    "resourceType": "microsoft.operationalinsights/workspaces",
+    "visualization": "map",
+    "mapSettings": {
+      "locInfo": "LatLong",
+      "locInfoColumn": "Country",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "sizeSettings": "LoginAttempts",
+      "sizeAggregation": "Count",
+      "opacity": 0.8,
+      "labelSettings": "friendly_location",
+      "legendMetric": "LoginAttempts",
+      "legendAggregation": "Count",
+      "itemColorSettings": {
+        "nodeColorField": "LoginAttempts",
+        "colorAggregation": "Count",
+        "type": "heatmap",
+        "heatmapPalette": "greenRed"
+      }
+    }
+  },
+  "name": "query - 0"
+}
