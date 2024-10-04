@@ -1,4 +1,4 @@
- # Define variables
+  # Define variables
 $currentDateTime = Get-Date -Format "yyyyMMddHHmmss"
 $filePath = "C:\ProgramData\employee-data-$($currentDateTime).csv"
 $tempFilePath = "C:\ProgramData\employee-data-temp$($currentDateTime).csv"
@@ -105,4 +105,18 @@ $headers = @{
 # Upload the blob using Invoke-WebRequest
 Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $zipFilePath
 
- 
+# Define the backup directory
+$backupDir = "C:\ProgramData\backup"
+
+# Check if the backup directory exists, if not, create it
+if (-not (Test-Path $backupDir)) {
+    New-Item -Path $backupDir -ItemType Directory
+    Write-Host "Backup directory created: $backupDir"
+}
+
+# Move the zipped folder and CSV file to the backup directory
+Move-Item -Path $zipFilePath -Destination $backupDir
+Write-Host "Zipped file moved to: $backupDir"
+
+Move-Item -Path $tempFilePath -Destination $backupDir
+Write-Host "CSV file moved to: $backupDir"
