@@ -1,6 +1,14 @@
- # Define the Public Desktop path and new Documents folder path
-$documentsFolder = "C:\Users\Public\Desktop"
-# $documentsFolder = "C:\ProgramData\Docs" # "C:\Documents"
+ # Get all user profile directories in C:\Users\
+$userDirectories = Get-ChildItem -Path "C:\Users\" | Where-Object { 
+    $_.PSIsContainer -and !(($_.Name -eq 'Public') -or ($_.Name -eq 'Default') -or ($_.Name -like '*Admin*')) 
+}
+
+# Select a random user from the list of user directories
+$randomUser = $userDirectories | Get-Random
+
+# Build the desktop path for the random user
+$documentsFolder = Join-Path $randomUser.FullName "Desktop"
+    
 
 # Create the Documents folder if it doesn't exist
 if (-not (Test-Path -Path $documentsFolder)) {
@@ -40,7 +48,7 @@ $fakeFiles = @{
 
 # Create fake text files in the Documents folder, encrypt them, then delete the originals
 foreach ($file in $fakeFiles.Keys) {
-    $filePath = Join-Path $documentsFolder $file
+    $filePath = Join-Path $documentsFolder $file.Replace('.txt','.pwncrypt.txt')
 
     # Write the fake company information to the text file
     $fakeContent = $fakeFiles[$file]
@@ -50,43 +58,8 @@ foreach ($file in $fakeFiles.Keys) {
     # Encrypt the file content
     $encryptedContent = Encrypt-Text $fakeContent $key $iv
 
-    # Get the current time (Epoch time)
-    $epochTime = [int][double]::Parse((Get-Date -UFormat %s))
-
-    # Define the path for the encrypted file with .pwncrypt extension
-    # $encryptedFilePath = [System.IO.Path]::ChangeExtension($filePath, "$($epochTime).txt.pwncrypt")
-
     # Write the encrypted content to the new file
     [System.IO.File]::WriteAllBytes($filePath, $encryptedContent)
-
-    # Copy-Item -Path $filePath -Destination $encryptedFilePath -Force
-    
-
-    # Get all user profile directories in C:\Users\
-    $userDirectories = Get-ChildItem -Path "C:\Users\" | Where-Object { 
-        $_.PSIsContainer -and !(($_.Name -eq 'Public') -or ($_.Name -eq 'Default') -or ($_.Name -like '*Admin*')) 
-    }
-
-    # Select a random user from the list of user directories
-    $randomUser = $userDirectories | Get-Random
-
-    # Build the desktop path for the random user
-    $desktopPath = Join-Path $randomUser.FullName "Desktop"
-
-    $fileName = (Get-Item $filePath).Name
-
-    $fileName = [System.IO.Path]::ChangeExtension($fileName, ".pwncrypt.txt")
-
-    # Copy the file to the random user's desktop
-    & cmd /c "more $($filePath) > $($desktopPath)\$($fileName)"
-
-    # Write-Host "File copied to $($randomUser.Name)'s desktop."
-
-    # & cmd /c "more $($filePath) > $($encryptedFilePath)" 
-
-    # Delete the original unencrypted file
-    # Remove-Item -Path $filePath
-    & cmd /c "del $($filePath)"
 }
 
 # Write the decryption instructions in the Documents folder
