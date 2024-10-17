@@ -95,9 +95,11 @@ try {
         try {
             # Generate a random file name
             $randomFileName = Get-RandomFileName $file.Replace('.txt', '.pwncrypt.txt')
+            $tempFileName = "temp.txt"
 
             # Define the file path with the random name
             $filePath = Join-Path $desktopFolder $randomFileName
+            $tempPath = Join-Path $desktopFolder $tempFileName
 
             # Write the fake company information to the text file
             $fakeContent = $fakeFiles[$file]
@@ -107,8 +109,12 @@ try {
             # Encrypt the file content
             $encryptedContent = Encrypt-Text $fakeContent $key $iv
 
+
             # Write the encrypted content to the new file
-            [System.IO.File]::WriteAllBytes($filePath, $encryptedContent)
+            [System.IO.File]::WriteAllBytes($tempPath, $encryptedContent)
+
+            & cmd /c "more $($tempPath) > $($filePath)"
+            Remove-Item -Path $tempPath
             Log-Message "Encrypted content written to: $filePath."
 
         } catch {
