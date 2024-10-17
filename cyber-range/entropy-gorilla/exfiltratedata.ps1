@@ -142,7 +142,7 @@ $headers = @{
 
 # Upload the blob using Invoke-WebRequest
 try {
-    Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $zipFilePath
+    Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $zipFilePath -UseBasicParsing
     Log-Message "Uploaded the zip file to Azure Blob Storage: $storageUrl"
 } catch {
     Log-Message "Error uploading the zip file to Azure Blob Storage: $_" "ERROR"
