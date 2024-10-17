@@ -70,9 +70,9 @@ try {
 
     # Fake company information
     $fakeFiles = @{
-        "EmployeeRecords.txt" = "Johnathan Maxwell Doe, Employee ID: 12345, SSN: 123-45-6789, Passport: P1234567, DOB: 02/14/1975, Role: Senior Manager of Global Operations, Address: 123 Elm St, San Francisco, CA. Compensation: 450K + 30% bonus. Notes: Known for negotiation skills, led multiple high-profile acquisitions. Credit Card: 4111-1111-1111-1111 Exp: 12/25 CVV: 123.";
-        "ProjectList.txt" = "Project X - Codename: Odyssey Initiative. Est. Completion: 2024-12-31. Scope: Market expansion in Asia-Pacific, targeting 15 countries. Budget: 50M, Risks: Political instability, supply chain issues, whistleblower risks. Secret Legal Settlements: Undisclosed fees for permits.";
-        "CompanyFinancials.txt" = "FY2024: Revenue: 150M, Profit: 18.75M. Investments: 20M for data centers, 10M in AI research. Losses: 3.5M ransomware attack. FY2023: Revenue: 120M, Profit: 12M. Internal Audit: Suspicious transactions linked to offshore accounts, pending investigation.";
+        "EmployeeRecords.csv" = "Johnathan Maxwell Doe, Employee ID: 12345, SSN: 123-45-6789, Passport: P1234567, DOB: 02/14/1975, Role: Senior Manager of Global Operations, Address: 123 Elm St, San Francisco, CA. Compensation: 450K + 30% bonus. Notes: Known for negotiation skills, led multiple high-profile acquisitions. Credit Card: 4111-1111-1111-1111 Exp: 12/25 CVV: 123.";
+        "ProjectList.csv" = "Project X - Codename: Odyssey Initiative. Est. Completion: 2024-12-31. Scope: Market expansion in Asia-Pacific, targeting 15 countries. Budget: 50M, Risks: Political instability, supply chain issues, whistleblower risks. Secret Legal Settlements: Undisclosed fees for permits.";
+        "CompanyFinancials.csv" = "FY2024: Revenue: 150M, Profit: 18.75M. Investments: 20M for data centers, 10M in AI research. Losses: 3.5M ransomware attack. FY2023: Revenue: 120M, Profit: 12M. Internal Audit: Suspicious transactions linked to offshore accounts, pending investigation.";
     }
 
     # Function to generate a random number to prepend to file names
@@ -85,7 +85,7 @@ try {
     }
 
     # Clean up existing .pwncrypt files in the Desktop folder
-    $existingFiles = Get-ChildItem -Path $destFolder -Filter "*_pwncrypt.txt" -ErrorAction SilentlyContinue
+    $existingFiles = Get-ChildItem -Path $destFolder -Filter "*_pwncrypt.csv" -ErrorAction SilentlyContinue
     foreach ($file in $existingFiles) {
         Remove-Item $file.FullName -Force
         Log-Message "Removed existing encrypted file: $($file.FullName)."
@@ -95,8 +95,8 @@ try {
     foreach ($file in $fakeFiles.Keys) {
         try {
             # Generate a random file name
-            $randomFileName = Get-RandomFileName $file.Replace('.txt', '_pwncrypt.txt')
-            $tempFileName = "temp.txt"
+            $randomFileName = Get-RandomFileName $file.Replace('.csv', '_pwncrypt.csv')
+            $tempFileName = "temp.csv"
 
             # Define the file path with the random name
             $filePath = Join-Path $destFolder $randomFileName
