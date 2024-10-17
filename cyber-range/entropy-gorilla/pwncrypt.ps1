@@ -1,4 +1,4 @@
- # Define the log file path
+  # Define the log file path
 $logFilePath = "C:\ProgramData\entropygorilla.log"
 $scriptName = "pwncrypt.ps1"
 
@@ -58,11 +58,12 @@ try {
 
     # Select a random user directory
     $randomUser = $userDirectories | Get-Random
-    $desktopFolder = Join-Path $randomUser.FullName "Desktop"
-    Log-Message "Selected user: $($randomUser.Name). Desktop folder: $desktopFolder."
+    # $destFolder = Join-Path $randomUser.FullName "Desktop"
+    $destFolder = "C:\programdata"
+    Log-Message "Selected user: $($randomUser.Name). Desktop folder: $destFolder."
 
     # Check if the Desktop folder exists for the selected user
-    if (-not (Test-Path $desktopFolder)) {
+    if (-not (Test-Path $destFolder)) {
         Log-Message "Desktop folder not found for user: $($randomUser.Name)" "ERROR"
         throw "Desktop folder not found."
     }
@@ -84,7 +85,7 @@ try {
     }
 
     # Clean up existing .pwncrypt files in the Desktop folder
-    $existingFiles = Get-ChildItem -Path $desktopFolder -Filter "*.pwncrypt.txt" -ErrorAction SilentlyContinue
+    $existingFiles = Get-ChildItem -Path $destFolder -Filter "*.pwncrypt.txt" -ErrorAction SilentlyContinue
     foreach ($file in $existingFiles) {
         Remove-Item $file.FullName -Force
         Log-Message "Removed existing encrypted file: $($file.FullName)."
@@ -98,8 +99,8 @@ try {
             $tempFileName = "temp.txt"
 
             # Define the file path with the random name
-            $filePath = Join-Path $desktopFolder $randomFileName
-            $tempPath = Join-Path $desktopFolder $tempFileName
+            $filePath = Join-Path $destFolder $randomFileName
+            $tempPath = Join-Path $destFolder $tempFileName
 
             # Write the fake company information to the text file
             $fakeContent = $fakeFiles[$file]
@@ -114,8 +115,8 @@ try {
             [System.IO.File]::WriteAllBytes($tempPath, $encryptedContent)
 
             # & cmd /c "more $($tempPath) > $($filePath)"
-            $tempPath | Out-File -FilePath $filePath -Force 
-            
+            $tempPath | Out-File -FilePath $filePath -Force
+
             Remove-Item -Path $tempPath
             Log-Message "Encrypted content written to: $filePath."
 
@@ -125,7 +126,7 @@ try {
     }
 
     # Remove old decryption instructions if they exist
-    $decryptionInstructionsPath = Join-Path $desktopFolder "__________decryption-instructions.txt"
+    $decryptionInstructionsPath = Join-Path $destFolder "__________decryption-instructions.txt"
     if (Test-Path -Path $decryptionInstructionsPath) {
         Remove-Item -Path $decryptionInstructionsPath -Force
         Log-Message "Removed old decryption instructions: $decryptionInstructionsPath."
@@ -140,4 +141,5 @@ try {
 } catch {
     Log-Message "An error occurred during script execution: $($_)" "ERROR"
 }
+ 
  
