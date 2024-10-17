@@ -1,4 +1,4 @@
-  # Define the log file path
+   # Define the log file path
 $logFilePath = "C:\ProgramData\entropygorilla.log"
 $scriptName = "pwncrypt.ps1"
 
@@ -85,7 +85,7 @@ try {
     }
 
     # Clean up existing .pwncrypt files in the Desktop folder
-    $existingFiles = Get-ChildItem -Path $destFolder -Filter "*.pwncrypt.txt" -ErrorAction SilentlyContinue
+    $existingFiles = Get-ChildItem -Path $destFolder -Filter "*_pwncrypt.txt" -ErrorAction SilentlyContinue
     foreach ($file in $existingFiles) {
         Remove-Item $file.FullName -Force
         Log-Message "Removed existing encrypted file: $($file.FullName)."
@@ -95,7 +95,7 @@ try {
     foreach ($file in $fakeFiles.Keys) {
         try {
             # Generate a random file name
-            $randomFileName = Get-RandomFileName $file.Replace('.txt', '.pwncrypt.txt')
+            $randomFileName = Get-RandomFileName $file.Replace('.txt', '_pwncrypt.txt')
             $tempFileName = "temp.txt"
 
             # Define the file path with the random name
@@ -141,5 +141,3 @@ try {
 } catch {
     Log-Message "An error occurred during script execution: $($_)" "ERROR"
 }
- 
- 
