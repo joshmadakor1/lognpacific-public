@@ -115,8 +115,8 @@ try {
             [System.IO.File]::WriteAllBytes($tempPath, $encryptedContent)
 
             # & cmd /c "more $($tempPath) > $($filePath)"
-            $tempPath | Out-File -FilePath $filePath -Force
-
+            (Get-Content -Path $tempPath) | Out-File -FilePath $filePath -Force 
+             
             Remove-Item -Path $tempPath
             Log-Message "Encrypted content written to: $filePath."
 
