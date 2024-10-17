@@ -1,5 +1,5 @@
  # Define the log file path
-$logFilePath = "C:\ProgramData\entropygorilla_pwncrypt.log"
+$logFilePath = "C:\ProgramData\entropygorilla.log"
 $scriptName = "pwncrypt.ps1"
 
 # Function to log messages
