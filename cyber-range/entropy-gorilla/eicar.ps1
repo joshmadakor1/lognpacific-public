@@ -1,4 +1,4 @@
- # Define the log file path
+  # Define the log file path
 $logFile = "C:\ProgramData\entropygorilla.log"
 $scriptName = "eicar.ps1"
 
@@ -14,7 +14,7 @@ function Log-Message {
 }
 
 # EICAR Test String
-$eicarTestString1 = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR'
+$eicarTestString1 = 'X5O!P%@AP[4\PZX54(P^)7CC)7}$'
 $eicarTestString2 = '-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'
 
 # Define the file path where EICAR file will be created
@@ -31,7 +31,7 @@ try {
     }
 
     # Create the EICAR test file
-    "$($eicarTestString1)$($eicarTestString2)" | Out-File -FilePath $eicarFilePath -Force
+    "$($eicarTestString1)EICAR$($eicarTestString2)" | Out-File -FilePath $eicarFilePath -Force
     Log-Message "EICAR test file created at $eicarFilePath."
 
 } catch {
@@ -42,4 +42,3 @@ try {
 
 # End logging
 Log-Message "EICAR test file creation completed."
- 
