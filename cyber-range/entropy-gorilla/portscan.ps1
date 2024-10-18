@@ -14,7 +14,7 @@ function Log-Message {
 }
 
 # Define the range of IP addresses to scan
-$startIP = 5
+$startIP = 4
 $endIP = 10
 $baseIP = "10.0.0."
 
