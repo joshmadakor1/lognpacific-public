@@ -7,7 +7,7 @@
     1. Downloads the TOR browser installer: https://www.torproject.org/download/
     2. Installs it silently.
     3. Opens the TOR browser.
-    4. Creates a file containing a list of illicit items, simulating a user keeping track of purchases.
+    4. Creates a file [shopping-list.txt] containing a list of illicit items and purchase IDs, simulating a user keeping track of purchases.
     5. Deletes the file containing illicit items after a period of time.
 ———
 
