@@ -4,7 +4,7 @@
     browser and presumably uses it to do some darkweb shopping on a corporate workstation.
     The script below does the following:
 ———
-    1. Downloads the TOR browser locally.
+    1. Downloads the TOR browser installer: https://www.torproject.org/download/
     2. Installs it silently.
     3. Opens the TOR browser.
     4. Creates a file containing a list of illicit items, simulating a user keeping track of purchases.
