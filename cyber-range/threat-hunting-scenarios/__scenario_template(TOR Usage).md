@@ -2,12 +2,8 @@
 **Detection of Unauthorized TOR Browser Installation and Use**
 
 ## Example Scenario:
-Simulates a threat scenario by impersonating a user who installs a TOR browser and presumably uses it to do some dark web shopping on a corporate workstation. The script below does the following:
-1. Downloads the TOR browser installer: https://www.torproject.org/download/
-2. Installs it silently.
-3. Opens the TOR browser.
-4. Creates a file containing a list of illicit items, simulating a user keeping track of purchases.
-5. Deletes the file containing illicit items after a period of time.
+Simulates a threat scenario by impersonating a user who installs a TOR browser and presumably uses it to do some dark web shopping on a corporate workstation.
+
 ---
 
 ## Tables:
@@ -31,7 +27,7 @@ Simulates a threat scenario by impersonating a user who installs a TOR browser a
 
 ---
 
-## Detection Query:
+## Detection Queries:
 ```kql
 // Installer name == tor-browser-windows-x86_64-portable-(version).exe
 // Detect the installer being downloaded
@@ -81,23 +77,24 @@ DeviceFileEvents
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/75791401-9b1b-49d9-a8b8-019e2d4bd1c3">
 
 
-## Steps to Reproduce:
-1. Provision a virtual machine with a public IP address
-2. Ensure the device is actively communicating or available on the internet. (Test ping, etc.)
-3. Onboard the device to Microsoft Defender for Endpoint
-4. Verify the relevant logs (e.g., network traffic logs, exposure alerts) are being collected in MDE.
-5. Execute the KQL query in the MDE advanced hunting to confirm detection.
+## Steps to Reproduce Above Logs:
+1. Download the TOR browser installer: https://www.torproject.org/download/
+2. Installs it silently with: tor-browser-windows-x86_64-portable-14.0.1.exe /S
+3. Opens the TOR browser from the folder on the desktop
+4. Connect to TOR and browse a few sites.
+5. Create a folder on your desktop called shopping-list.txt and put a few fake (illicit) items in there
+6. Delete the file.
 
 ---
 
 ## Supplemental:
-- **More on "Shared Services" in the context of PCI DSS**: [PCI DSS Scoping and Segmentation](https://www.pcisecuritystandards.org%2Fdocuments%2FGuidance-PCI-DSS-Scoping-and-Segmentation_v1.pdf)
+- **What is Tor and Should You Use It? | Mashable Explains**: https://youtu.be/6czcc1gZ7Ak?si=NC2M0EzR8DSR53yt
 
 ---
 
 ## Created By:
-- **Author Name**: Sijia Li
-- **Author Contact**: https://www.linkedin.com/in/sijiasevon/
+- **Author Name**: Josh Madakor
+- **Author Contact**: https://www.linkedin.com/in/joshmadakor/
 - **Date**: August 31, 2024
 
 ## Validated By:
@@ -115,4 +112,4 @@ DeviceFileEvents
 ## Revision History:
 | **Version** | **Changes**                   | **Date**         | **Modified By**   |
 |-------------|-------------------------------|------------------|-------------------|
-| 1.0         | Initial draft                  | `September  6, 2024`  | `Sijia Li`   
+| 1.0         | Initial draft                  | `September  6, 2024`  | `Josh Madakor`   
