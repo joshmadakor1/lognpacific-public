@@ -9,7 +9,7 @@
    - Current Dread Forum: ```g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion```
    - Dark Markets Forum: ```g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion/d/DarkNetMarkets```
    - Current Elysium Market: ```elysiumyeudtha62s4oaowwm7ifmnunz3khs4sllhvinphfm4nirfcqd.onion```
-6. Create a folder on your desktop called ```tor-shopping-list.txt`` and put a few fake (illicit) items in there
+6. Create a folder on your desktop called ```tor-shopping-list.txt``` and put a few fake (illicit) items in there
 7. Delete the file.
 
 ---
