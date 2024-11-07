@@ -13,11 +13,34 @@ Management suspects that some employees may be using TOR browsers to bypass netw
 
 ---
 
-## Arrange Discoveries in Chronological Order
+## Steps Taken
+
+1. ...
+2. ...
+3. ...
 
 ---
 
-## Tables:
+## Chronological Events
+
+1. ...
+2. ...
+3. ...
+
+---
+
+## Summary
+
+...
+
+---
+
+## Response Taken
+TOR usage was confirmed on endpoint ______________. The device was isolated and the user's direct manager was notified.
+
+---
+
+## MDE Tables Referenced:
 | **Parameter**       | **Description**                                                              |
 |---------------------|------------------------------------------------------------------------------|
 | **Name**| DeviceFileEvents|
@@ -72,11 +95,6 @@ DeviceNetworkEvents
 DeviceFileEvents
 | where FileName contains "shopping-list.txt"
 ```
-
----
-
-## Response Taken
-TOR usage was confirmed on endpoint ______________. The device was isolated and the user's direct manager was notified.
 
 ---
 
