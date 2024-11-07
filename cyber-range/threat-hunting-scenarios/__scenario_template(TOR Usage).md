@@ -2,7 +2,7 @@
 **Detection of Unauthorized TOR Browser Installation and Use**
 
 ## Example Scenario:
-Here's a threat-hunting scenario focused on detecting unauthorized TOR browser use in a corporate environment. This exercise will help analysts understand potential indicators of TOR activity and methods to investigate unauthorized usage.
+Detect unauthorized use of TOR browsers within the corporate network, as TOR usage may indicate attempts to access the dark web, hide internet activity, or bypass network security controls. The exercise will aim to detect this behavior and analyze related security incidents.
 
 ---
 
@@ -90,6 +90,9 @@ DeviceFileEvents
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/ed8191a0-0cea-4867-8685-4a655c5bff4c">
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/75791401-9b1b-49d9-a8b8-019e2d4bd1c3">
+
+## Response Instructions
+If TOR usage is confirmed on a specific endpoint, isolate the device from the network and notify the user’s manager.
 
 ---
 
