@@ -8,15 +8,15 @@ Detect unauthorized use of TOR browsers within the corporate network, as TOR usa
 
 ## Steps the "Bad Actor" took Create Logs and IoCs:
 1. Download the TOR browser installer: https://www.torproject.org/download/
-2. Installs it silently with: tor-browser-windows-x86_64-portable-14.0.1.exe /S
+2. Install it silently: ```tor-browser-windows-x86_64-portable-14.0.1.exe /S```
 3. Opens the TOR browser from the folder on the desktop
 4. Connect to TOR and browse a few sites.
-   - Current Dread Forum: g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion/
-   - Dark Markets Forum: g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion/d/DarkNetMarkets
-   - Current Elysium Market: elysiumyeudtha62s4oaowwm7ifmnunz3khs4sllhvinphfm4nirfcqd.onion
-6. Create a folder on your desktop called shopping-list.txt and put a few fake (illicit) items in there
+   - Current Dread Forum: ```g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion```
+   - Dark Markets Forum: ```g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion/d/DarkNetMarkets```
+   - Current Elysium Market: ```elysiumyeudtha62s4oaowwm7ifmnunz3khs4sllhvinphfm4nirfcqd.onion```
+6. Create a folder on your desktop called ```tor-shopping-list.txt`` and put a few fake (illicit) items in there
 7. Delete the file.
-8. 
+
 ---
 
 ## Tables:
