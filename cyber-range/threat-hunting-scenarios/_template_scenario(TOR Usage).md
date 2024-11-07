@@ -77,25 +77,6 @@ DeviceFileEvents
 
 ---
 
-## Sample Output:
-
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/922e6629-6ec0-4e9e-a204-977e7a6cc1c2">
-
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/6ef273a3-51de-426a-8840-73dcd81db3f9">
-
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/725dcbf1-0f2c-46cc-9e48-f28a311f10bc">
-
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/04949b99-1383-4c48-8ba4-265fc6d21336">
-
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/ed8191a0-0cea-4867-8685-4a655c5bff4c">
-
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/75791401-9b1b-49d9-a8b8-019e2d4bd1c3">
-
-## Response Instructions
-If TOR usage is confirmed on a specific endpoint, isolate the device from the network and notify the user’s manager.
-
----
-
 ## Supplemental:
 - **What is Tor and Should You Use It? | Mashable Explains**: https://youtu.be/6czcc1gZ7Ak?si=NC2M0EzR8DSR53yt
 
