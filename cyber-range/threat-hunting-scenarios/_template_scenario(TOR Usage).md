@@ -19,7 +19,7 @@ Detect unauthorized use of TOR browsers within the corporate network, as TOR usa
 
 ---
 
-## Tables:
+## Tables Used to Detect IoCs:
 | **Parameter**       | **Description**                                                              |
 |---------------------|------------------------------------------------------------------------------|
 | **Name**| DeviceFileEvents|
@@ -40,7 +40,7 @@ Detect unauthorized use of TOR browsers within the corporate network, as TOR usa
 
 ---
 
-## Detection Queries:
+## Related Queries:
 ```kql
 // Installer name == tor-browser-windows-x86_64-portable-(version).exe
 // Detect the installer being downloaded
@@ -77,7 +77,7 @@ DeviceFileEvents
 
 ---
 
-## Supplemental:
+## Supplemental Information:
 - **What is Tor and Should You Use It? | Mashable Explains**: https://youtu.be/6czcc1gZ7Ak?si=NC2M0EzR8DSR53yt
 
 ---
