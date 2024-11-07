@@ -1,4 +1,4 @@
-# Scenario
+# Scenario Construction Cheatsheet
 **Detection of Unauthorized TOR Browser Installation and Use**
 
 ## Example Scenario:
@@ -24,19 +24,19 @@ Detect unauthorized use of TOR browsers within the corporate network, as TOR usa
 |---------------------|------------------------------------------------------------------------------|
 | **Name**| DeviceFileEvents|
 | **Info**|https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceinfo-table|
-| **Purpose**| The DeviceInfo table in the advanced hunting schema contains information about devices in the organization, including OS version, active users, and computer name.|
+| **Purpose**| Used for detecting TOR download and installation, as well as the shopping list creation and deletion. |
 
 | **Parameter**       | **Description**                                                              |
 |---------------------|------------------------------------------------------------------------------|
 | **Name**| DeviceProcessEvents|
 | **Info**|https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceinfo-table|
-| **Purpose**| The DeviceProcessEvents table in the advanced hunting schema contains information about process creation and related events. Use this reference to construct queries that return information from this table.|
+| **Purpose**| Used to detect the silent installation of TOR as well as the TOR browser and service launching.|
 
 | **Parameter**       | **Description**                                                              |
 |---------------------|------------------------------------------------------------------------------|
 | **Name**| DeviceNetworkEvents|
 | **Info**|https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicenetworkevents-table|
-| **Purpose**| The DeviceNetworkEvents table in the advanced hunting schema contains information about network connections and related events. Use this reference to construct queries that return information from this table.|
+| **Purpose**| Used to detect TOR network activity, specifically tor.exe and firefox.exe making connections over ports to be used by TOR (9001, 9030, 9040, 9050, 9051, 9150).|
 
 ---
 
@@ -65,7 +65,7 @@ DeviceProcessEvents
 
 // TOR Browser or service is being used and is actively creating network connections
 DeviceNetworkEvents
-| where InitiatingProcessFileName in~ ("tor.exe", "meek-client.exe", "firefox.exe")
+| where InitiatingProcessFileName in~ ("tor.exe", "firefox.exe")
 | where RemotePort in (9001, 9030, 9040, 9050, 9051, 9150)
 | project Timestamp, DeviceName, InitiatingProcessAccountName, InitiatingProcessFileName, RemoteIP, RemotePort, RemoteUrl
 | order by Timestamp desc
