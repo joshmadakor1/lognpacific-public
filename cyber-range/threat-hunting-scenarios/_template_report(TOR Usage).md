@@ -1,4 +1,4 @@
-# Threat Hunt Report
+# Threat Hunt Report (Unauthorized TOR Usage)
 **Detection of Unauthorized TOR Browser Installation and Use**
 
 ## Example Scenario:
