@@ -1,4 +1,4 @@
-# Threat Hunting Event (TOR Usage)
+# Threat Event (TOR Usage)
 **Unauthorized TOR Browser Installation and Use**
 
 ## Steps the "Bad Actor" took Create Logs and IoCs:
