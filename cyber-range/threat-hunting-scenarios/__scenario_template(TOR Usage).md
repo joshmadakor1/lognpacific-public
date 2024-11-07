@@ -1,9 +1,22 @@
-# Use Case
+# Scenario
 **Detection of Unauthorized TOR Browser Installation and Use**
 
 ## Example Scenario:
-Simulates a threat scenario by impersonating a user who installs a TOR browser and presumably uses it to do some dark web shopping on a corporate workstation.
+Here's a threat-hunting scenario focused on detecting unauthorized TOR browser use in a corporate environment. This exercise will help analysts understand potential indicators of TOR activity and methods to investigate unauthorized usage.
 
+---
+
+## Steps the "Bad Actor" took Create Logs and IoCs:
+1. Download the TOR browser installer: https://www.torproject.org/download/
+2. Installs it silently with: tor-browser-windows-x86_64-portable-14.0.1.exe /S
+3. Opens the TOR browser from the folder on the desktop
+4. Connect to TOR and browse a few sites.
+   - Current Dread Forum: g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion/
+   - Dark Markets Forum: g66ol3eb5ujdckzqqfmjsbpdjufmjd5nsgdipvxmsh7rckzlhywlzlqd.onion/d/DarkNetMarkets
+   - Current Elysium Market: elysiumyeudtha62s4oaowwm7ifmnunz3khs4sllhvinphfm4nirfcqd.onion
+6. Create a folder on your desktop called shopping-list.txt and put a few fake (illicit) items in there
+7. Delete the file.
+8. 
 ---
 
 ## Tables:
@@ -75,15 +88,6 @@ DeviceFileEvents
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/ed8191a0-0cea-4867-8685-4a655c5bff4c">
 
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/75791401-9b1b-49d9-a8b8-019e2d4bd1c3">
-
-
-## Steps to Reproduce Above Logs:
-1. Download the TOR browser installer: https://www.torproject.org/download/
-2. Installs it silently with: tor-browser-windows-x86_64-portable-14.0.1.exe /S
-3. Opens the TOR browser from the folder on the desktop
-4. Connect to TOR and browse a few sites.
-5. Create a folder on your desktop called shopping-list.txt and put a few fake (illicit) items in there
-6. Delete the file.
 
 ---
 
