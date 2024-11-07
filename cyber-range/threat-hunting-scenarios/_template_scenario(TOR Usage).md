@@ -1,10 +1,5 @@
-# Scenario Construction Cheatsheet
-**Detection of Unauthorized TOR Browser Installation and Use**
-
-## Example Scenario:
-Management suspects that some employees may be using TOR browsers to bypass network security controls because recent network logs show unusual encrypted traffic patterns and connections to known TOR entry nodes. Additionally, there have been anonymous reports of employees discussing ways to access restricted sites during work hours. The goal is to detect any TOR usage and analyze related security incidents to mitigate potential risks.
-
----
+# Threat Hunting Event (TOR Usage)
+**Unauthorized TOR Browser Installation and Use**
 
 ## Steps the "Bad Actor" took Create Logs and IoCs:
 1. Download the TOR browser installer: https://www.torproject.org/download/
@@ -77,20 +72,15 @@ DeviceFileEvents
 
 ---
 
-## Supplemental Information:
-- **What is Tor and Should You Use It? | Mashable Explains**: https://youtu.be/6czcc1gZ7Ak?si=NC2M0EzR8DSR53yt
-
----
-
 ## Created By:
 - **Author Name**: Josh Madakor
 - **Author Contact**: https://www.linkedin.com/in/joshmadakor/
 - **Date**: August 31, 2024
 
 ## Validated By:
-- **Reviewer Name**: Josh Madakor
-- **Reviewer Contact**: https://www.linkedin.com/in/joshmadakor/
-- **Validation Date**: September 6, 2024
+- **Reviewer Name**: 
+- **Reviewer Contact**: 
+- **Validation Date**: 
 
 ---
 
