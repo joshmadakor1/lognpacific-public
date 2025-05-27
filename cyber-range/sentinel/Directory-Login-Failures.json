@@ -2,7 +2,7 @@
   "type": 3,
   "content": {
     "version": "KqlItem/1.0",
-    "query": "SigninLogs\n| where ResultType != 0\n| summarize LoginCount = count() by Identity, Latitude = tostring(LocationDetails[\"geoCoordinates\"][\"latitude\"]), Longitude = tostring(LocationDetails[\"geoCoordinates\"][\"longitude\"]), City = tostring(LocationDetails[\"city\"]), Country = tostring(LocationDetails[\"countryOrRegion\"])\n| project Identity, Latitude, Longitude, City, Country, LoginCount, friendly_label = strcat(Identity, \" - \", City, \", \", Country)",
+    "query": "SigninLogs\n| where ResultType != 0 and Identity !contains \"-\"\n| summarize LoginCount = count() by Identity, Latitude = tostring(LocationDetails[\"geoCoordinates\"][\"latitude\"]), Longitude = tostring(LocationDetails[\"geoCoordinates\"][\"longitude\"]), City = tostring(LocationDetails[\"city\"]), Country = tostring(LocationDetails[\"countryOrRegion\"])\n| order by LoginCount desc\n| project Identity, Latitude, Longitude, City, Country, LoginCount, friendly_label = strcat(Identity, \" - \", City, \", \", Country)\n",
     "size": 3,
     "timeContext": {
       "durationMs": 2592000000
@@ -18,10 +18,11 @@
       "sizeAggregation": "Sum",
       "labelSettings": "friendly_label",
       "legendMetric": "LoginCount",
-      "legendAggregation": "Sum",
+      "numberOfMetrics": 0,
+      "legendAggregation": "Count",
       "itemColorSettings": {
         "nodeColorField": "LoginCount",
-        "colorAggregation": "Sum",
+        "colorAggregation": "Count",
         "type": "heatmap",
         "heatmapPalette": "greenRed"
       }
