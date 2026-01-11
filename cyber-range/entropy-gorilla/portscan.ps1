@@ -14,8 +14,8 @@ function Log-Message {
 }
 
 # Define the range of IP addresses to scan
-$startIP = 4
-$endIP = 10
+$startIP = 155
+$endIP = 200
 $baseIP = "10.0.0."
 
 # Expanded list of common ports (well-known port numbers 0-1023 + some higher)
