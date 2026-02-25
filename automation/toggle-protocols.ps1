@@ -142,30 +142,4 @@ if ($makeSecure) {
     Write-Host "TLS 1.1 has been enabled."
 }
 
-# TLS 1.2 settings
-$serverPathTLS12 = "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Server"
-$clientPathTLS12 = "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Client"
-
-if ($makeSecure) {
-    New-Item -Path $serverPathTLS12 -Force | Out-Null
-    New-ItemProperty -Path $serverPathTLS12 -Name 'Enabled' -Value 1 -PropertyType 'DWord' -Force | Out-Null
-    New-ItemProperty -Path $serverPathTLS12 -Name 'DisabledByDefault' -Value 0 -PropertyType 'DWord' -Force | Out-Null
-    
-    New-Item -Path $clientPathTLS12 -Force | Out-Null
-    New-ItemProperty -Path $clientPathTLS12 -Name 'Enabled' -Value 1 -PropertyType 'DWord' -Force | Out-Null
-    New-ItemProperty -Path $clientPathTLS12 -Name 'DisabledByDefault' -Value 0 -PropertyType 'DWord' -Force | Out-Null
-    
-    Write-Host "TLS 1.2 has been enabled."
-} else {
-    New-Item -Path $serverPathTLS12 -Force | Out-Null
-    New-ItemProperty -Path $serverPathTLS12 -Name 'Enabled' -Value 0 -PropertyType 'DWord' -Force | Out-Null
-    New-ItemProperty -Path $serverPathTLS12 -Name 'DisabledByDefault' -Value 1 -PropertyType 'DWord' -Force | Out-Null
-    
-    New-Item -Path $clientPathTLS12 -Force | Out-Null
-    New-ItemProperty -Path $clientPathTLS12 -Name 'Enabled' -Value 0 -PropertyType 'DWord' -Force | Out-Null
-    New-ItemProperty -Path $clientPathTLS12 -Name 'DisabledByDefault' -Value 1 -PropertyType 'DWord' -Force | Out-Null
-    
-    Write-Host "TLS 1.2 has been disabled."
-}
-
 Write-Host "Please reboot for settings to take effect." 
